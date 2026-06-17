@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex Lab — Where Ideas Converge</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05070f;
+  --bg2:#090d1c;
+  --bg3:#0f1428;
+  --p:#6c3fff;
+  --p2:#8b5cf6;
+  --p3:#a78bfa;
+  --c:#22d3ee;
+  --c2:#06b6d4;
+  --gold:#f59e0b;
+  --w:#f1f5f9;
+  --w2:rgba(241,245,249,0.6);
+  --w3:rgba(241,245,249,0.25);
+  --w4:rgba(241,245,249,0.07);
+  --line:rgba(108,63,255,0.15);
+  --line2:rgba(34,211,238,0.12);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--w);font-family:'Inter',sans-serif;overflow-x:hidden;font-size:16px}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--p);border-radius:4px}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  height:68px;padding:0 6%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(5,7,15,0.7);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--line);
+  transition:background 0.3s;
+}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-brand img{width:40px;height:40px;object-fit:contain}
+.nav-brand-text{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:0.05em;color:var(--w);text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{color:var(--w2);text-decoration:none;font-size:13.5px;letter-spacing:0.04em;transition:color 0.2s;font-weight:400}
+.nav-links a:hover{color:var(--c)}
+.nav-btn{
+  background:linear-gradient(135deg,var(--p),var(--c2));
+  color:#fff !important;padding:9px 22px;border-radius:8px;
+  font-weight:500 !important;font-size:13px !important;
+  letter-spacing:0.06em !important;text-transform:uppercase;
+  transition:opacity 0.2s !important;
+}
+.nav-btn:hover{opacity:0.85;color:#fff !important}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;
+  padding:130px 6% 80px;
+  position:relative;overflow:hidden;
+}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-glow-a{
+  position:absolute;width:700px;height:700px;border-radius:50%;
+  top:50%;left:50%;transform:translate(-50%,-55%);
+  background:radial-gradient(circle,rgba(108,63,255,0.15) 0%,rgba(34,211,238,0.04) 55%,transparent 70%);
+  pointer-events:none;animation:glow 8s ease-in-out infinite;
+}
+.hero-glow-b{
+  position:absolute;width:400px;height:400px;border-radius:50%;
+  bottom:10%;right:5%;
+  background:radial-gradient(circle,rgba(34,211,238,0.08) 0%,transparent 65%);
+  pointer-events:none;animation:glow 10s ease-in-out infinite reverse;
+}
+@keyframes glow{0%,100%{transform:translate(-50%,-55%) scale(1)}50%{transform:translate(-50%,-55%) scale(1.12)}}
+
+.hero-inner{position:relative;z-index:1;max-width:860px}
+.hero-logo{
+  width:110px;height:110px;object-fit:contain;margin:0 auto 36px;
+  filter:drop-shadow(0 0 30px rgba(108,63,255,0.55)) drop-shadow(0 0 60px rgba(34,211,238,0.2));
+  animation:float 5s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--c);border:1px solid rgba(34,211,238,0.25);
+  padding:7px 18px;border-radius:100px;margin-bottom:32px;
+  background:rgba(34,211,238,0.06);font-weight:500;
+}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--c);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+
+.hero-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,8.5vw,96px);
+  font-weight:800;line-height:0.95;
+  letter-spacing:-0.04em;
+  margin-bottom:8px;color:var(--w);
+}
+.hero-title .line2{
+  background:linear-gradient(90deg,var(--p3),var(--c));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;margin-top:6px;
+}
+.hero-tagline{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(13px,1.4vw,16px);
+  font-weight:500;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--w3);margin:24px 0 20px;
+}
+.hero-sub{
+  font-size:clamp(15px,1.6vw,18px);color:var(--w2);
+  max-width:580px;margin:0 auto 48px;
+  font-weight:300;line-height:1.75;
+}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--p) 0%,var(--c2) 100%);
+  color:#fff;text-decoration:none;
+  padding:15px 36px;border-radius:10px;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 4px 24px rgba(108,63,255,0.35);
+}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(108,63,255,0.5)}
+.cta-secondary{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--w3);
+  color:var(--w);text-decoration:none;
+  padding:15px 36px;border-radius:10px;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:border-color 0.2s,color 0.2s,transform 0.2s;
+}
+.cta-secondary:hover{border-color:var(--c);color:var(--c);transform:translateY(-2px)}
+
+.hero-stats{
+  display:flex;gap:0;justify-content:center;flex-wrap:wrap;
+  margin-top:72px;
+  border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;max-width:680px;margin-left:auto;margin-right:auto;
+  background:rgba(15,20,40,0.6);backdrop-filter:blur(8px);
+}
+.hero-stat{
+  flex:1;min-width:120px;padding:24px 20px;text-align:center;
+  border-right:1px solid var(--line);
+}
+.hero-stat:last-child{border-right:none}
+.stat-n{
+  font-family:'Syne',sans-serif;font-size:clamp(26px,3.5vw,38px);
+  font-weight:800;letter-spacing:-0.03em;color:var(--w);line-height:1;
+}
+.stat-n em{color:var(--p3);font-style:normal}
+.stat-l{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--w3);margin-top:6px;font-weight:500}
+
+/* ─── SECTION BASE ─── */
+section{padding:110px 6%}
+.max{max-width:1160px;margin:0 auto}
+.section-eyebrow{
+  font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--p3);font-weight:600;margin-bottom:14px;
+}
+.section-h{
+  font-family:'Syne',sans-serif;font-size:clamp(32px,4.5vw,54px);
+  font-weight:800;letter-spacing:-0.03em;line-height:1.1;color:var(--w);
+  margin-bottom:18px;
+}
+.section-p{font-size:17px;color:var(--w2);max-width:520px;font-weight:300;line-height:1.75}
+.divline{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:0}
+
+/* ─── PRODUCTS ─── */
+#products{background:var(--bg)}
+.prod-header{margin-bottom:64px}
+.prod-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:1px;
+  border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;
+  background:var(--line);
+}
+.prod-card{
+  background:var(--bg2);
+  padding:36px 32px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  transition:background 0.25s;
+}
+.prod-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(108,63,255,0.08),transparent 60%);
+  opacity:0;transition:opacity 0.3s;pointer-events:none;
+}
+.prod-card:hover{background:var(--bg3)}
+.prod-card:hover::after{opacity:1}
+.prod-card:hover .pc-arrow{transform:translate(3px,-3px)}
+
+.pc-num{
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.15em;color:var(--p3);margin-bottom:20px;opacity:0.7;
+}
+.pc-icon{
+  font-size:32px;margin-bottom:16px;line-height:1;display:block;
+}
+.pc-title{
+  font-family:'Syne',sans-serif;font-size:19px;font-weight:700;
+  color:var(--w);letter-spacing:-0.02em;margin-bottom:10px;
+}
+.pc-desc{
+  font-size:14px;color:var(--w2);line-height:1.7;flex:1;margin-bottom:22px;
+  font-weight:300;
+}
+.pc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.pc-tag{
+  font-size:11px;color:var(--c);
+  background:rgba(34,211,238,0.07);
+  border:1px solid rgba(34,211,238,0.18);
+  padding:4px 11px;border-radius:100px;
+  font-weight:500;letter-spacing:0.04em;
+}
+.pc-link{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--p3);
+}
+.pc-arrow{
+  display:inline-block;transition:transform 0.2s;font-size:14px;
+}
+
+/* ─── ABOUT ─── */
+#about{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-right{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.about-card{
+  background:var(--bg3);border:1px solid var(--line);
+  border-radius:16px;padding:28px 24px;
+}
+.about-card.span2{grid-column:span 2;
+  background:linear-gradient(135deg,rgba(108,63,255,0.1),rgba(34,211,238,0.05));
+  border-color:rgba(108,63,255,0.3);
+  text-align:center;
+}
+.about-card .n{
+  font-family:'Syne',sans-serif;font-size:32px;font-weight:800;
+  letter-spacing:-0.03em;color:var(--w);line-height:1;margin-bottom:6px;
+}
+.about-card .n em{color:var(--p3);font-style:normal}
+.about-card .l{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--w3);font-weight:500}
+.about-card.span2 .n{font-size:20px;line-height:1.4;letter-spacing:-0.01em}
+
+.about-body{font-size:15.5px;color:var(--w2);line-height:1.8;font-weight:300;margin-bottom:20px}
+.about-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--c);text-decoration:none;
+  border-bottom:1px solid rgba(34,211,238,0.3);
+  padding-bottom:2px;transition:border-color 0.2s;
+}
+.about-link:hover{border-color:var(--c)}
+
+/* ─── CONTACT ─── */
+#contact{background:var(--bg)}
+.contact-inner{max-width:700px;margin:0 auto;text-align:center}
+.contact-form{margin-top:52px;text-align:left;display:flex;flex-direction:column;gap:18px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.fg label{display:block;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--w3);margin-bottom:9px;font-weight:500}
+.fg input,.fg textarea{
+  width:100%;background:var(--bg2);
+  border:1px solid var(--line);border-radius:10px;
+  padding:14px 18px;color:var(--w);
+  font-family:'Inter',sans-serif;font-size:15px;
+  outline:none;transition:border-color 0.2s;
+  appearance:none;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--w3)}
+.fg input:focus,.fg textarea:focus{border-color:var(--p)}
+.fg textarea{height:140px;resize:none}
+.btn-submit{
+  width:100%;margin-top:6px;
+  background:linear-gradient(135deg,var(--p),var(--c2));
+  color:#fff;border:none;cursor:pointer;
+  padding:16px;border-radius:10px;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 4px 20px rgba(108,63,255,0.3);
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(108,63,255,0.45)}
+.contact-email{margin-top:36px;font-size:14px;color:var(--w3)}
+.contact-email a{color:var(--p3);text-decoration:none}
+.contact-email a:hover{text-decoration:underline}
+.success-msg{display:none;text-align:center;color:var(--c);font-size:14px;margin-top:10px;letter-spacing:0.05em}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:36px 6%;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
+  background:var(--bg);
+}
+.footer-left{display:flex;align-items:center;gap:10px}
+.footer-left img{width:30px;height:30px;object-fit:contain}
+.footer-brand{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--w2)}
+.footer-mid{display:flex;gap:24px;list-style:none}
+.footer-mid a{font-size:12.5px;color:var(--w3);text-decoration:none;letter-spacing:0.04em;transition:color 0.2s}
+.footer-mid a:hover{color:var(--c)}
+.footer-right{font-size:12.5px;color:var(--w3)}
+
+/* ─── MOBILE ─── */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .frow{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+  .footer-mid{justify-content:center}
+  .hero-stats{border-radius:12px}
+  .hero-stat{min-width:80px;padding:18px 12px}
+}
+@media(max-width:500px){
+  .hero-ctas{flex-direction:column;align-items:stretch}
+  .cta-primary,.cta-secondary{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-brand">
+    <img src="data:image/png;base64,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" alt="Vertex Lab">
+    <span class="nav-brand-text">Vertex Lab</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.linkedin.com/company/ghost-tech-org/" target="_blank">LinkedIn</a></li>
+    <li><a href="#contact" class="nav-btn">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-glow-a"></div>
+  <div class="hero-glow-b"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="badge-dot"></span>7 products live now</div>
+    <h1 class="hero-title">
+      Where Ideas
+      <span class="line2">Converge.</span>
+    </h1>
+    <p class="hero-tagline">Unseen Power &nbsp;·&nbsp; Unmatched Innovation</p>
+    <p class="hero-sub">Vertex Lab builds next-generation software — operating systems, browsers, health trackers, translators and more — engineered for the digital explorers of tomorrow.</p>
+    <div class="hero-ctas">
+      <a href="#products" class="cta-primary">Explore Products <span>→</span></a>
+      <a href="#contact" class="cta-secondary">Work With Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="stat-n">50K<em>+</em></div><div class="stat-l">Active Users</div></div>
+      <div class="hero-stat"><div class="stat-n">4.9<em>★</em></div><div class="stat-l">Rating</div></div>
+      <div class="hero-stat"><div class="stat-n">100<em>+</em></div><div class="stat-l">Features</div></div>
+      <div class="hero-stat"><div class="stat-n">7</div><div class="stat-l">Products</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divline"></div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="max">
+    <div class="prod-header">
+      <div class="section-eyebrow">Our Ecosystem</div>
+      <h2 class="section-h">Everything built<br>from scratch.</h2>
+      <p class="section-p">Seven ambitious products, one vision — tools that give digital explorers real power.</p>
+    </div>
+    <div class="prod-grid">
+
+      <a href="https://ghost-shift-os-iso-page.vercel.app/" target="_blank" class="prod-card">
+        <div class="pc-num">01 / OS</div>
+        <span class="pc-icon">🖥️</span>
+        <div class="pc-title">Vertex Shift OS</div>
+        <div class="pc-desc">A next-generation operating system engineered for blazing speed, airtight security and full customizability — cloud-synced out of the box.</div>
+        <div class="pc-tags"><span class="pc-tag">Lightning Fast</span><span class="pc-tag">Advanced Security</span><span class="pc-tag">Cloud Sync</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+      <a href="https://ghost-browser.vercel.app/" target="_blank" class="prod-card">
+        <div class="pc-num">02 / Browser</div>
+        <span class="pc-icon">🌐</span>
+        <div class="pc-title">Vertex Browser — Linux</div>
+        <div class="pc-desc">Privacy-first browsing with a built-in VPN and ad-blocker. Loads 3× faster than the competition, without sacrificing your data.</div>
+        <div class="pc-tags"><span class="pc-tag">3× Faster</span><span class="pc-tag">Built-in VPN</span><span class="pc-tag">Ad-blocker</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+      <a href="https://browser-nine-delta.vercel.app/" target="_blank" class="prod-card">
+        <div class="pc-num">03 / Browser</div>
+        <span class="pc-icon">🌐</span>
+        <div class="pc-title">Vertex Browser — Windows</div>
+        <div class="pc-desc">The same privacy-first power, native on Windows. Smart downloads, complete privacy, zero ads — web browsing the way it should be.</div>
+        <div class="pc-tags"><span class="pc-tag">Smart Downloads</span><span class="pc-tag">Full Privacy</span><span class="pc-tag">Windows Native</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+      <a href="https://health-20app.vercel.app/" target="_blank" class="prod-card">
+        <div class="pc-num">04 / Health</div>
+        <span class="pc-icon">💪</span>
+        <div class="pc-title">Vertex Health</div>
+        <div class="pc-desc">Your complete wellness companion. Track heart rate, activity, sleep and nutrition — all in one beautifully unified dashboard.</div>
+        <div class="pc-tags"><span class="pc-tag">Heart Rate</span><span class="pc-tag">Sleep Analysis</span><span class="pc-tag">Nutrition</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+      <a href="https://language-translation-systems-ayushm.vercel.app/" target="_blank" class="prod-card">
+        <div class="pc-num">05 / AI</div>
+        <span class="pc-icon">🌍</span>
+        <div class="pc-title">Vertex Translator</div>
+        <div class="pc-desc">AI-powered translation across 100+ languages with voice and image input. Instant, accurate, and built for the world.</div>
+        <div class="pc-tags"><span class="pc-tag">100+ Languages</span><span class="pc-tag">Voice Input</span><span class="pc-tag">Image Translation</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+      <a href="https://super-manatee-18a925.netlify.app/" target="_blank" class="prod-card">
+        <div class="pc-num">06 / Entertainment</div>
+        <span class="pc-icon">🎬</span>
+        <div class="pc-title">Vertex Entertainment</div>
+        <div class="pc-desc">4K movies, 50M+ songs, games and e-books — your all-in-one entertainment hub, no subscriptions juggling required.</div>
+        <div class="pc-tags"><span class="pc-tag">4K Streaming</span><span class="pc-tag">50M+ Songs</span><span class="pc-tag">E-Books</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+      <a href="https://euphonious-narwhal-5667b9.netlify.app/" target="_blank" class="prod-card">
+        <div class="pc-num">07 / Travel</div>
+        <span class="pc-icon">✈️</span>
+        <div class="pc-title">Vertex Go-Tour</div>
+        <div class="pc-desc">Smart travel planning for the curious explorer. Discover, compare and book amazing destinations worldwide at the best prices.</div>
+        <div class="pc-tags"><span class="pc-tag">Global Destinations</span><span class="pc-tag">Easy Booking</span><span class="pc-tag">Best Prices</span></div>
+        <div class="pc-link">View Project <span class="pc-arrow">↗</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divline"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="max">
+    <div class="about-grid">
+      <div>
+        <div class="section-eyebrow">Who We Are</div>
+        <h2 class="section-h">Built for the<br>digital frontier.</h2>
+        <p class="about-body">Vertex Lab is an independent software studio that builds tools people genuinely want to use — fast, private, and thoughtfully designed. Every product starts with one question: what would make digital life genuinely better?</p>
+        <p class="about-body">From low-level operating systems to consumer health apps, we span the full stack — and every product in our ecosystem is crafted to work seamlessly with the others.</p>
+        <a href="https://www.linkedin.com/company/ghost-tech-org/" target="_blank" class="about-link">Follow on LinkedIn →</a>
+      </div>
+      <div class="about-right">
+        <div class="about-card"><div class="n">50K<em>+</em></div><div class="l">Active Users</div></div>
+        <div class="about-card"><div class="n">4.9<em>★</em></div><div class="l">Avg Rating</div></div>
+        <div class="about-card"><div class="n">7</div><div class="l">Live Products</div></div>
+        <div class="about-card"><div class="n">100<em>+</em></div><div class="l">Features</div></div>
+        <div class="about-card span2"><div class="n">"Where Ideas Converge"</div><div class="l" style="margin-top:10px">— Vertex Lab Mission</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divline"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2 class="section-h">Let's build something<br>together.</h2>
+    <p class="section-p" style="margin:0 auto;text-align:center">Have a question, partnership idea, or just want to say hello? We'd love to hear from you.</p>
+    <form class="contact-form" onsubmit="submitForm(event)">
+      <div class="frow">
+        <div class="fg"><label>Your Name</label><input type="text" placeholder="Alex Smith" required></div>
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="alex@example.com" required></div>
+      </div>
+      <div class="fg"><label>Subject</label><input type="text" placeholder="Partnership, feedback, or just hello…"></div>
+      <div class="fg"><label>Message</label><textarea placeholder="Tell us what's on your mind…" required></textarea></div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+      <p class="success-msg" id="smsg">✓ Message sent — we'll be in touch soon!</p>
+    </form>
+    <p class="contact-email">Or email us directly at <a href="mailto:ghostshift.org@gmail.com">ghostshift.org@gmail.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <img src="data:image/png;base64,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" alt="">
+    <span class="footer-brand">Vertex Lab</span>
+  </div>
+  <ul class="footer-mid">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.linkedin.com/company/ghost-tech-org/" target="_blank">LinkedIn</a></li>
+  </ul>
+  <div class="footer-right">© 2025 Vertex Lab. Made with ♥ for Digital Explorers.</div>
+</footer>
+
+<script>
+// Particle canvas
+const canvas = document.getElementById('hero-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, pts;
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = document.getElementById('hero').offsetHeight;
+}
+function initPts(){
+  const n = Math.floor(W*H/9000);
+  pts = Array.from({length:n},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.2+.4
+  }));
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i];
+    a.x+=a.vx; a.y+=a.vy;
+    if(a.x<0||a.x>W)a.vx*=-1;
+    if(a.y<0||a.y>H)a.vy*=-1;
+    for(let j=i+1;j<pts.length;j++){
+      const b=pts[j];
+      const dx=a.x-b.x,dy=a.y-b.y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){
+        const al=(1-d/130)*0.18;
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(108,63,255,${al})`;
+        ctx.lineWidth=0.7;
+        ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      }
+    }
+    ctx.beginPath();
+    ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(139,92,246,0.55)';ctx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',()=>{resize();initPts()});
+resize();initPts();draw();
+
+// Form
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('smsg').style.display='block';
+  e.target.reset();
+  setTimeout(()=>document.getElementById('smsg').style.display='none',6000);
+}
+
+// Nav active highlight on scroll
+const sections=['hero','products','about','contact'];
+const links=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY+100;
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&y>=el.offsetTop&&y<el.offsetTop+el.offsetHeight){
+      links.forEach(l=>l.style.color='');
+      const active=document.querySelector(`.nav-links a[href="#${id}"]`);
+      if(active&&!active.classList.contains('nav-btn'))active.style.color='#22d3ee';
+    }
+  });
+});
+</script>
+</body>
+</html>
